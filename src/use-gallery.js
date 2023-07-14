@@ -2,8 +2,18 @@ import { useState } from "react";
 import { Alert } from "react-native";
 import * as ImagePicker from "expo-image-picker";
 
+const defaultAlbum = {
+  id: 1,
+  title: "기본",
+};
+
 export const useGallery = () => {
   const [images, setImages] = useState([]);
+  const [selectedAlbum, setSelectedAlbum] = useState(defaultAlbum);
+  const [albums, setAlbums] = useState([defaultAlbum]);
+  const [modalVisible, setModalVisible] = useState(false);
+  const [albumTitle, setAlbumTitle] = useState("");
+  const [isDropDownOpen, setIsDropDownOpen] = useState();
 
   const pickImage = async () => {
     // No permissions request is necessary for launching the image library
@@ -22,6 +32,7 @@ export const useGallery = () => {
       const newImage = {
         id: lastId + 1,
         uri: result.assets[0].uri,
+        albumId: selectedAlbum.id,
       };
       setImages([...images, newImage]);
     }
@@ -43,14 +54,57 @@ export const useGallery = () => {
     ]);
   };
 
+  const openModal = () => setModalVisible(true);
+  const closeModal = () => setModalVisible(false);
+
+  const openDropDown = () => setIsDropDownOpen(true);
+  const closeDropDown = () => setIsDropDownOpen(false);
+
+  const addAlbum = () => {
+    const lastId = albums.length === 0 ? 0 : albums[albums.length - 1].id;
+
+    const newAlbum = {
+      id: lastId + 1,
+      title: albumTitle,
+    };
+    setAlbums([...albums, newAlbum]);
+  };
+
+  const selectAlbum = (album) => {
+    setSelectedAlbum(album);
+    closeDropDown();
+  };
+
+  const resetAlbumTitle = () => setAlbumTitle("");
+
+  const filteredImages = images.filter(
+    (image) => image.albumId === selectedAlbum.id
+  );
   // 이미지 추가를 위한 버튼 영역
   const imagesWithAddButton = [
-    ...images,
+    ...filteredImages,
     {
       id: -1,
       uri: "",
     },
   ];
 
-  return { images, imagesWithAddButton, pickImage, deleteImage };
+  return {
+    imagesWithAddButton,
+    selectedAlbum,
+    modalVisible,
+    albumTitle,
+    isDropDownOpen,
+    albums,
+    pickImage,
+    deleteImage,
+    openModal,
+    closeModal,
+    setAlbumTitle,
+    addAlbum,
+    resetAlbumTitle,
+    openDropDown,
+    closeDropDown,
+    selectAlbum,
+  };
 };
