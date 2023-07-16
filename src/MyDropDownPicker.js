@@ -10,6 +10,7 @@ export default ({
   albums,
   onPressAlbum,
   selectedAlbum,
+  onLongPressAlbum,
 }) => {
   return (
     <View>
@@ -25,7 +26,7 @@ export default ({
       >
         <Text style={{ fontWeight: "bold" }}>{selectedAlbum.title}</Text>
         <SimpleLineIcons
-          name={isDropDownOpen ? "arrow-down" : "arrow-up"}
+          name={isDropDownOpen ? "arrow-up" : "arrow-down"}
           size={12}
           color="black"
           style={{ marginLeft: 8 }}
@@ -63,8 +64,8 @@ export default ({
             const isSelectedAlbum = album.id === selectedAlbum.id;
             return (
               <TouchableOpacity
+                activeOpacity={1}
                 key={`album-${index}`}
-                onPress={() => onPressAlbum(album)}
                 style={{
                   paddingVertical: 12,
                   width: "100%",
@@ -72,6 +73,8 @@ export default ({
                   alignItems: "center",
                   backgroundColor: "#FFFFFF",
                 }}
+                onPress={() => onPressAlbum(album)}
+                onLongPress={() => onLongPressAlbum(album.id)}
               >
                 <Text
                   style={{ fontWeight: isSelectedAlbum ? "bold" : undefined }}

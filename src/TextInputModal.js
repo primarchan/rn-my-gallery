@@ -8,19 +8,23 @@ import {
 } from "react-native";
 
 export default ({
-  modalVisible,
+  textInputModalVisible,
   albumTitle,
   setAlbumTitle,
   onSubmitEditing,
-  onPressBackDrop,
+  onPressTextInputBackDrop,
 }) => {
   return (
-    <Modal animationType="fade" transparent={true} visible={modalVisible}>
+    <Modal
+      animationType="fade"
+      transparent={true}
+      visible={textInputModalVisible}
+    >
       <KeyboardAvoidingView
         behavior={Platform.OS === "ios" ? "padding" : "height"}
         style={{ flex: 1 }}
       >
-        <Pressable onPress={onPressBackDrop} style={{ flex: 1 }}>
+        <Pressable onPress={onPressTextInputBackDrop} style={{ flex: 1 }}>
           <SafeAreaView
             style={{ width: "100%", position: "absolute", bottom: 0 }}
           >
