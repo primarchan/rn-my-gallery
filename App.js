@@ -7,6 +7,7 @@ import {
   Dimensions,
   Platform,
   TouchableOpacity,
+  Alert,
 } from "react-native";
 
 import { useGallery } from "./src/use-gallery";
@@ -45,6 +46,7 @@ export default function App() {
   } = useGallery();
 
   const width = Dimensions.get("screen").width;
+
   const columnSize = width / 3;
 
   const onPressOpenGallery = () => {
@@ -52,7 +54,27 @@ export default function App() {
   };
 
   const onLongPressImage = (imageId) => deleteImage(imageId);
-  const onPressAddAlbum = () => openTextInputModal();
+
+  const onPressWatchAd = () => {
+    console.log("Loading AD");
+  };
+
+  const onPressAddAlbum = () => {
+    if (albums.length >= 2) {
+      Alert.alert("광고를 시청해야 앨범을 시청할 수 있습니다.", "", [
+        {
+          style: "cancel",
+          text: "닫기",
+        },
+        {
+          text: "광고 시청",
+          onPress: onPressWatchAd,
+        },
+      ]);
+    } else {
+      openTextInputModal();
+    }
+  };
 
   const onSubmitEditing = () => {
     if (!albumTitle) return;
