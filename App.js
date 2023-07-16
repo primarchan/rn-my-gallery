@@ -24,6 +24,8 @@ export default function App() {
     albums,
     bigImageModalVisible,
     selectedImage,
+    showPreviousArrow,
+    showNextArrow,
     pickImage,
     deleteImage,
     openTextInputModal,
@@ -38,6 +40,8 @@ export default function App() {
     openBigImageModal,
     closeBigImagetModal,
     selectImage,
+    moveToPreviousImage,
+    moveToNextImage,
   } = useGallery();
 
   const width = Dimensions.get("screen").width;
@@ -78,6 +82,9 @@ export default function App() {
   };
 
   const onPressBigImageModalBackDrop = () => closeBigImagetModal();
+
+  const onPressLeftArrow = () => moveToPreviousImage();
+  const onPressRightArrow = () => moveToNextImage();
 
   const renderItem = ({ item: image, index }) => {
     const { id, uri } = image;
@@ -139,6 +146,10 @@ export default function App() {
         bigImageModalVisible={bigImageModalVisible}
         onPressBigImageModalBackDrop={onPressBigImageModalBackDrop}
         selectedImage={selectedImage}
+        onPressLeftArrow={onPressLeftArrow}
+        onPressRightArrow={onPressRightArrow}
+        showPreviousArrow={showPreviousArrow}
+        showNextArrow={showNextArrow}
       />
 
       {/* 이미지 리스트 */}

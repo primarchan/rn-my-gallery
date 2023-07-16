@@ -109,6 +109,37 @@ export const useGallery = () => {
   const filteredImages = images.filter(
     (image) => image.albumId === selectedAlbum.id
   );
+
+  const moveToPreviousImage = () => {
+    if (!selectedImage) return;
+    const selectedImageIndex = filteredImages.findIndex(
+      (image) => image.id === selectedImage.id
+    );
+    const previousImageIndex = selectedImageIndex - 1;
+    if (previousImageIndex < 0) return;
+    const previousImage = filteredImages[previousImageIndex];
+    setSelectedImage(previousImage);
+  };
+
+  const moveToNextImage = () => {
+    if (!selectedImage) return;
+    const selectedImageIndex = filteredImages.findIndex(
+      (image) => image.id === selectedImage.id
+    );
+    const nextImageIndex = selectedImageIndex + 1;
+    if (nextImageIndex > filteredImages.length - 1 || nextImageIndex === -1)
+      return;
+    const nextImage = filteredImages[nextImageIndex];
+    setSelectedImage(nextImage);
+  };
+
+  const showPreviousArrow =
+    filteredImages.findIndex((image) => image.id === selectedImage?.id) !== 0;
+
+  const showNextArrow =
+    filteredImages.findIndex((image) => image.id === selectedImage?.id) !==
+    filteredImages.length - 1;
+
   // 이미지 추가를 위한 버튼 영역
   const imagesWithAddButton = [
     ...filteredImages,
@@ -127,6 +158,8 @@ export const useGallery = () => {
     albums,
     bigImageModalVisible,
     selectedImage,
+    showPreviousArrow,
+    showNextArrow,
     pickImage,
     deleteImage,
     openTextInputModal,
@@ -141,5 +174,7 @@ export const useGallery = () => {
     openBigImageModal,
     closeBigImagetModal,
     selectImage,
+    moveToPreviousImage,
+    moveToNextImage,
   };
 };

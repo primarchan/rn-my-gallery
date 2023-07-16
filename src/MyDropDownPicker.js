@@ -41,7 +41,6 @@ export default ({
             justifyContent: "center",
             alignItems: "center",
             paddingHorizontal: 10,
-            backgroundColor: "brown",
           }}
         >
           <Text style={{ fontSize: 12 }}>엘범 추가</Text>
