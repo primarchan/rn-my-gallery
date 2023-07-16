@@ -5,6 +5,7 @@
 - `npx create-expo-app {프로젝트명}`
 - `npx expo start`
 - `npx expo install expo-image-picker` [관련 링크](https://docs.expo.dev/versions/latest/sdk/imagepicker)
+- `npx expo install @react-native-async-storage/async-storage`
 
 ## 산출물
 
